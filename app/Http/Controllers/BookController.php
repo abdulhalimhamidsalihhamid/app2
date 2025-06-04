@@ -6,13 +6,22 @@ use App\Models\Book;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 class BookController extends Controller
 {
-     public function index()
+    public function __construct()
+    {
+        // حماية كل الدوال داخل هذا الكنترولر
+        if (!Session::has('faculty_id')) {
+            // في حال session غير موجودة، سيتم إعادة التوجيه لصفحة الدخول
+            abort(403, 'غير مصرح بالدخول.'); // أو يمكنك استخدام redirect()->route('login')
+        }
+    }
+    public function index()
     {
         $facultyId = session('faculty_id');
-       
+
         $books = Book::where('faculty_member_id', $facultyId)->get();
         return view('files.add_file', compact('books'));
     }

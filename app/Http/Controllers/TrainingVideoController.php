@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TrainingVideo;
 use Illuminate\Http\Request;
+use App\Models\TrainingVideo;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class TrainingVideoController extends Controller
 {
+        public function __construct()
+    {
+        // حماية كل الدوال داخل هذا الكنترولر
+        if (!Session::has('faculty_id')) {
+            // في حال session غير موجودة، سيتم إعادة التوجيه لصفحة الدخول
+            abort(403, 'غير مصرح بالدخول.'); // أو يمكنك استخدام redirect()->route('login')
+        }
+    }
+
     public function index()
     {
         $facultyId = session('faculty_id');

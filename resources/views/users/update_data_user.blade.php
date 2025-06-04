@@ -8,8 +8,9 @@
   <style>
     body {
       background-color: #f2f4f7;
-      
+      animation: fadeInBody 1s ease-in-out;
     }
+
     .profile-form {
       max-width: 600px;
       margin: auto;
@@ -17,13 +18,49 @@
       padding: 30px;
       border-radius: 12px;
       box-shadow: 0 0 10px rgba(0,0,0,0.08);
+      animation: slideInUp 0.9s ease forwards;
+      opacity: 0;
+    }
+
+    .form-control, .form-select {
+      transition: all 0.3s ease-in-out;
+    }
+
+    .form-control:focus, .form-select:focus {
+      transform: scale(1.02);
+      box-shadow: 0 0 5px rgba(0,123,255,0.3);
+    }
+
+    .btn {
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.03);
+    }
+
+    @keyframes fadeInBody {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInUp {
+      0% {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
   </style>
 </head>
-<body>
+<body style="background-image: url('{{ asset('image/2.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
+
 @include('home.navbar_user')
 
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
   <div class="profile-form">
 
     <h4 class="mb-4 text-center">تعديل البيانات الشخصية</h4>

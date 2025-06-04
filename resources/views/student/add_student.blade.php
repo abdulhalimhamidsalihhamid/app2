@@ -4,64 +4,126 @@
   <meta charset="UTF-8">
   <title>إضافة طلاب</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+  <style>
+    .div-home {
+      background-image: url('{{ asset('image/2.jpg') }}');
+      background-size: cover;
+      background-repeat: no-repeat;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .container-div {
+      background-color: rgba(255, 255, 255, 0.95);
+      margin-top: 80px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h4, h5 {
+      color: #007bff;
+      font-weight: bold;
+    }
+
+    .form-label {
+      font-weight: 600;
+    }
+
+    .btn-primary, .btn-danger {
+      border-radius: 10px;
+    }
+
+    .table {
+      border-radius: 12px;
+      overflow: hidden;
+      animation: fadeIn 1.2s ease-in-out;
+    }
+
+    tr {
+      animation: fadeIn 0.7s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .alert {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+  </style>
 </head>
-<body class="bg-light p-5">
-  <div class="container bg-white p-4 rounded shadow">
-    <h4 class="mb-4">إضافة طالب</h4>
+<body style="background-image: url('{{ asset('image/2.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
 
-    @if(session('success'))
-      <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+@include('home.navbar_user')
 
-    <form method="POST" action="{{ route('students.store') }}">
-      @csrf
-      <div class="row g-3 mb-3">
-        <div class="col-md-6">
-          <label class="form-label">اسم الطالب</label>
-          <input type="text" name="name" class="form-control" required>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">المقرر الدراسي</label>
-          <select name="course_id" class="form-select" required>
-            <option selected disabled>اختر مقررًا</option>
-            @foreach($courses as $course)
-              <option value="{{ $course->id }}">{{ $course->name }}</option>
-            @endforeach
-          </select>
-        </div>
+<div class="div-home">
+
+
+<div class="container container-div p-4">
+  <h4 class="mb-4">إضافة طالب</h4>
+
+  @if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+  @endif
+
+  <form method="POST" action="{{ route('students.store') }}">
+    @csrf
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <label class="form-label">اسم الطالب</label>
+        <input type="text" name="name" class="form-control" required>
       </div>
-      <button type="submit" class="btn btn-primary">إضافة</button>
-    </form>
+      <div class="col-md-6">
+        <label class="form-label">المقرر الدراسي</label>
+        <select name="course_id" class="form-select" required>
+          <option selected disabled>اختر مقررًا</option>
+          @foreach($courses as $course)
+            <option value="{{ $course->id }}">{{ $course->name }}</option>
+          @endforeach
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">إضافة</button>
+  </form>
 
-    <hr>
+  <hr>
 
-    <h5 class="mt-4">قائمة الطلاب:</h5>
-    <table class="table table-striped mt-3 text-center">
-      <thead>
+  <h5 class="mt-4">قائمة الطلاب:</h5>
+  <table class="table table-striped mt-3 text-center">
+    <thead class="table-primary">
+      <tr>
+        <th>#</th>
+        <th>اسم الطالب</th>
+        <th>المقرر</th>
+        <th>إجراء</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach($students as $student)
         <tr>
-          <th>#</th>
-          <th>اسم الطالب</th>
-          <th>المقرر</th>
-          <th>إجراء</th>
+          <td>{{ $student->id }}</td>
+          <td>{{ $student->name }}</td>
+          <td>{{ $student->course->name }}</td>
+          <td>
+            <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
+              @csrf
+              @method('DELETE')
+              <button class="btn btn-danger btn-sm">حذف</button>
+            </form>
+          </td>
         </tr>
-      </thead>
-      <tbody>
-        @foreach($students as $student)
-          <tr>
-            <td>{{ $student->id }}</td>
-            <td>{{ $student->name }}</td>
-            <td>{{ $student->course->name }}</td>
-            <td>
-              <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من الحذف؟');">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-danger btn-sm">حذف</button>
-              </form>
-            </td>
-          </tr>
-        @endforeach
-      </tbody>
-    </table>
-  </div>
+      @endforeach
+    </tbody>
+  </table>
+</div>
+</div>
+
 </body>
 </html>

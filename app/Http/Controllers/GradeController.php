@@ -3,14 +3,23 @@
 // app/Http/Controllers/GradeController.php
 namespace App\Http\Controllers;
 
-use App\Models\Student;
-use App\Models\Course;
 use App\Models\Grade;
+use App\Models\Course;
+use App\Models\Student;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class GradeController extends Controller
 {
+        public function __construct()
+    {
+        // حماية كل الدوال داخل هذا الكنترولر
+        if (!Session::has('faculty_id')) {
+            // في حال session غير موجودة، سيتم إعادة التوجيه لصفحة الدخول
+            abort(403, 'غير مصرح بالدخول.'); // أو يمكنك استخدام redirect()->route('login')
+        }
+    }
     public function index()
     {
         $courses = Course::all();

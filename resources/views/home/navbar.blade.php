@@ -1,9 +1,9 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
-  <div class="container ">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top custom-navbar">
+  <div class="container">
     <!-- شعار بصورة -->
     <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="{{asset('image\logo.png')}}" alt="شعار" class="logo-img me-2">
+      <img src="{{ asset('image/logo.png') }}" alt="شعار" class="logo-img me-2">
       <span class="fw-bold fs-5 text-primary"></span>
     </a>
 
@@ -29,5 +29,12 @@
     height: 50px;
     object-fit: cover;
     border-radius: 50%;
+  }
+
+  .custom-navbar {
+    background: linear-gradient(to left, rgba(255, 255, 255, 0.9), rgba(240, 248, 255, 0.9)); /* تموج بلون فاتح مع شفافية */
+    backdrop-filter: blur(8px); /* يجعل التموج ناعم ويزيد من الجمالية */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: background 0.5s ease-in-out;
   }
 </style>

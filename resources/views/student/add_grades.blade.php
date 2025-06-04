@@ -6,9 +6,11 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
   <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-<body class="bg-light p-5">
+<body style="background-image: url('{{ asset('image/2.jpg') }}'); background-size: cover; background-repeat: no-repeat;">
 
-<div class="container bg-white p-4 rounded shadow">
+@include('home.navbar_user')
+
+<div class="container bg-white p-4 mt-5 mb-5 rounded shadow">
   <h4 class="mb-4 text-center">إضافة درجات الطلاب</h4>
 
   @if(session('success'))

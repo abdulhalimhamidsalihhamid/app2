@@ -7,29 +7,88 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
   <style>
     body {
-      background-color: #f8f9fa;
+      background-image: url('{{ asset('image/2.jpg') }}');
+      background-size: cover;
+      background-repeat: no-repeat;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .div-body {
+      background-color: rgba(248, 249, 250, 0.95);
       padding: 30px;
+      border-radius: 15px;
+      animation: fadeInBody 1.2s ease-in-out;
+    }
+
+    .form-container, .table-container {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      animation: fadeInUp 1s ease forwards;
     }
 
     .form-container {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin-bottom: 40px;
+      animation-delay: 0.2s;
     }
 
     .table-container {
-      background: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      animation-delay: 0.4s;
+    }
+
+    .table tbody tr {
+      animation: fadeInRow 0.6s ease-in-out both;
+    }
+
+    .btn-info:hover {
+      background-color: #0dcaf0;
+      color: white;
+    }
+
+    /* Animations */
+    @keyframes fadeInBody {
+      from {
+        opacity: 0;
+        transform: scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInRow {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .alert {
+      animation: fadeInUp 0.6s ease-in-out;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
+@include('home.navbar_user')
+
+<div class="container div-body">
 
   <!-- نموذج إضافة كتاب -->
   <div class="form-container">
@@ -82,7 +141,7 @@
   <!-- جدول عرض الكتب -->
   <div class="table-container mt-5">
     <h5 class="mb-3">الكتب المضافة</h5>
-    <table class="table table-striped">
+    <table class="table table-striped text-center">
       <thead class="table-light">
         <tr>
           <th>اسم الكتاب</th>
