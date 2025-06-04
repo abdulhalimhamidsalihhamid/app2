@@ -47,19 +47,23 @@
 <script>
 document.getElementById('courseSelect').addEventListener('change', function () {
   const courseId = this.value;
- fetch(`/app2/public/students/grades/students/${courseId}`)
+  fetch(`/app2/public/students/grades/students/${courseId}`)
     .then(response => response.json())
     .then(students => {
       const container = document.getElementById('studentsContainer');
       const body = document.getElementById('studentsTableBody');
       body.innerHTML = '';
       students.forEach((student, index) => {
+        // تعديل أسماء الحقول حسب البيانات
+        const mid = student.grades?.[0]?.mid_term || '';
+        const final = student.grades?.[0]?.final_term || '';
+
         const row = `
           <tr>
             <td>${index + 1}</td>
             <td>${student.name}</td>
-            <td><input type="number" name="grades[${index}][mid]" class="form-control" required></td>
-            <td><input type="number" name="grades[${index}][final]" class="form-control" required></td>
+            <td><input type="number" name="grades[${index}][mid]" class="form-control" value="${mid}" required></td>
+            <td><input type="number" name="grades[${index}][final]" class="form-control" value="${final}" required></td>
             <input type="hidden" name="grades[${index}][student_id]" value="${student.id}">
           </tr>`;
         body.innerHTML += row;
@@ -68,6 +72,8 @@ document.getElementById('courseSelect').addEventListener('change', function () {
     });
 });
 </script>
+
+
 
 </body>
 </html>

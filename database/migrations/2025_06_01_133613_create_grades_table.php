@@ -15,8 +15,8 @@ return new class extends Migration
         $table->id();
         $table->foreignId('student_id')->constrained()->onDelete('cascade');
         $table->foreignId('course_id')->constrained()->onDelete('cascade');
-        $table->integer('mid_term');
-        $table->integer('final_term');
+        $table->text('mid_term');
+        $table->text('final_term');
         $table->timestamps();
     });
     }

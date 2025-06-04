@@ -60,6 +60,8 @@ Route::prefix('students')->group(function () {
     Route::post('/grades', [GradeController::class, 'store'])->name('grades.store');
    // Route::get('/grades/students/{courseId}', [GradeController::class, 'fetchStudents'])->name('grades.students');
     Route::get('/grades/students/{courseId}', [GradeController::class, 'students'])->name('grades.students');
+
+
    // Route::get('/grades', fn() => view('student.add_grades'))->name('students.grades');
     Route::get('/home', fn() => view('student.home'))->name('students.home');
 });

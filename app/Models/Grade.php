@@ -18,4 +18,5 @@ class Grade extends Model
     {
         return $this->belongsTo(Course::class);
     }
+    
 }
