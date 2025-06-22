@@ -1,29 +1,30 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TrainingVideoController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\GradeController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\StudentController;
-use App\Http\Controllers\GradeController;
 
-/*
-Route::get('/', function () {
-    //return view('student.add_grades');
-   // return view('home.home');
-   // return view('materials.add_materials');
-    return view('users.update_data_user');
-});
-*/
+use App\Http\Controllers\TrainingVideoController;
+use Illuminate\Support\Facades\Session;
+
+
+use Illuminate\Support\Facades\Mail;
+
+
 
 // الواجهة الرئيسية
 Route::get('/', function () {
-    if (!Session::has('faculty_id')) {
-        return redirect()->route('users.login'); // غيّر اسم route حسب صفحة الدخول لديك
-    }
 
-    return view('home.home');
-})->name('home');
+     // حماية كل الدوال داخل هذا الكنترولر
+        if (!Session::has('faculty_id')) {
+        return  redirect()->route('users.login');
+        }
+
+     return view('home.home');
+    })->name('home');
+Route::get('/verify-email/{id}', [App\Http\Controllers\FacultyRegisterController::class, 'verify'])->name('faculty.verify');
 
 Route::get('/logout', function () {
     Session::forget('faculty_id');
@@ -44,6 +45,9 @@ Route::prefix('users')->group(function () {
     Route::post('/edit-profile', [App\Http\Controllers\FacultyRegisterController::class, 'update'])->name('users.update');
 
     Route::get('/home', fn() => view('home.home'))->name('users.home');
+
+
+
 });
 
 // مجموعة الطلاب
@@ -90,4 +94,5 @@ Route::prefix('videos')->group(function () {
     Route::post('/videos', [TrainingVideoController::class, 'store'])->name('videos.store');
     Route::delete('/videos/{video}', [TrainingVideoController::class, 'destroy'])->name('videos.destroy');
 });
+
 
