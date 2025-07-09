@@ -12,6 +12,11 @@ class Book extends Model
 
     protected $fillable = ['faculty_member_id', 'name', 'author', 'description', 'category', 'file_path'];
 
+    public function facultyMember()
+    {
+        return $this->belongsTo(FacultyMember::class);
+    }
+    
     public function getAttribute($key)
     {
         $value = parent::getAttribute($key);

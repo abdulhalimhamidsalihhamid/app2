@@ -18,6 +18,7 @@ return new class extends Migration
         $table->text('specialty');
         $table->text('degree');
         $table->string('password');
+        $table->text('role')->default('undefined');
         $table->timestamps();
     });
     }

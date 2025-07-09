@@ -137,7 +137,18 @@ class FacultyRegisterController extends Controller
             // ✅ تخزين الجلسة
             session(['faculty_id' => $user->id]);
 
-            return redirect()->route('home');
+
+            $role = Crypt::decryptString($user->role);
+            if ($role === 'teacher') {
+               return redirect()->route('home');
+            }
+            if ($role === 'admin') {
+               return redirect()->route('admin.dashboard');
+            }
+             if ($role === 'student') {
+               return redirect()->route('student.dashboard');
+            }
+
         }
 
         return back()->withErrors(['email' => 'بيانات الدخول غير صحيحة'])->withInput();

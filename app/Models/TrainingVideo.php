@@ -56,4 +56,8 @@ class TrainingVideo extends Model
     {
         return $this->belongsTo(FacultyMember::class);
     }
+    public function facultyMember()
+{
+    return $this->belongsTo(FacultyMember::class, 'faculty_id');
+}
 }

@@ -63,6 +63,7 @@ document.getElementById('courseSelect').addEventListener('change', function () {
         const row = `
           <tr>
             <td>${index + 1}</td>
+            <td>${student.id}</td>
             <td>${student.name}</td>
             <td><input type="number" name="grades[${index}][mid]" class="form-control" value="${mid}" required></td>
             <td><input type="number" name="grades[${index}][final]" class="form-control" value="${final}" required></td>

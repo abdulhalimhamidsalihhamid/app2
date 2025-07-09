@@ -1,17 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\CourseController;
+
 use App\Http\Controllers\StudentController;
-
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\TrainingVideoController;
-use Illuminate\Support\Facades\Session;
+use App\Http\Controllers\Admin\AdminDashboardController;
 
-
-use Illuminate\Support\Facades\Mail;
-
+use App\Http\Controllers\StudentDashboardController;
 
 
 // الواجهة الرئيسية
@@ -96,3 +96,29 @@ Route::prefix('videos')->group(function () {
 });
 
 
+Route::prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+
+    // صفحة الإعدادات الشخصية للمشرف
+
+
+    // إرسال رسالة جديدة
+Route::get('/admin/messages/create', [AdminDashboardController::class, 'create'])->name('admin.messages.create');
+Route::post('/admin/messages/store', [AdminDashboardController::class, 'store'])->name('admin.messages.store');
+    // عرض المستخدمين
+    Route::get('/users', [AdminUserController::class, 'index'])->name('admin.users.index');
+    Route::get('/users/{id}/edit', [AdminUserController::class, 'edit'])->name('admin.users.edit');
+    Route::put('/users/{id}', [AdminUserController::class, 'update'])->name('admin.users.update');
+    Route::delete('/users/{id}', [AdminUserController::class, 'destroy'])->name('admin.users.destroy');
+});
+
+
+Route::prefix('students')->group(function () {
+
+
+Route::get('/student/dashboard', [StudentDashboardController::class, 'dashboard'])->name('student.dashboard');
+Route::get('/student/videos', [StudentDashboardController::class, 'videos'])->name('student.videos');
+Route::get('/student/books', [StudentDashboardController::class, 'books'])->name('student.books');
+Route::get('/student/grades', [StudentDashboardController::class, 'grades'])->name('student.grades');
+
+});
